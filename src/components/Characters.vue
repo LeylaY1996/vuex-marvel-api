@@ -3,13 +3,15 @@
         <h3>Hello this is characters.vue</h3>
         <ul>
             <li v-for="character in characters">
+                <router-link :to="{name: 'character',params:{ id:character.id } }">
                 {{ character.name }}
+                </router-link>
             </li>
         </ul>
     </div>
 </template>
 <script>
-import {public_key, secret_key, hash } from '../marvel';
+import {public_key, secret_key, hash, url } from '../marvel';
 import axios from 'axios'
 export default {
     name: 'Characters',
@@ -24,7 +26,7 @@ export default {
     methods:{
     getCharacters: function() {
         
-      axios.get(`http://gateway.marvel.com/v1/public/characters?ts=1&apikey=${public_key}&hash=${hash}`)
+      axios.get(`${url}/characters?ts=1&apikey=${public_key}&hash=${hash}`)
       .then((response) => {
           response.data.data.results.forEach((item) => {
           console.log(item)

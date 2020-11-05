@@ -1,6 +1,12 @@
 <template lang="html">
     <div>
         <h3>{{ this.$route.params.id }}</h3>
+        <ul>
+            <li v-for="char in character">
+                {{ char.name }}
+                {{ char.description }}
+            </li>
+        </ul>
     </div>
 </template>
 <script>
@@ -10,7 +16,9 @@ export default {
     name:'Character',
     data(){
         return{ 
-           character: []
+           character: [],
+           url:'',
+           size:''
 
         }
     },
@@ -25,6 +33,11 @@ export default {
             axios.get(`${url}/characters/${characterId}?ts=1&apikey=${public_key}&hash=${hash}`)
                 .then((result) => {
                     console.log("burada",result.data.data)
+                    result.data.data.results.forEach((item) => {
+                        this.character.push(item);
+                        this.url = item.thumbnail.path
+                        console.log(this.url)
+                    })
                 })
                 .catch((error) =>{
                     console.log(error)

@@ -11,34 +11,19 @@
     </div>
 </template>
 <script>
-import {public_key, secret_key, hash, url } from '../marvel';
-import axios from 'axios'
+import {public_key, secret_key, hash } from '../marvel';
+import { mapState } from 'vuex'
 export default {
     name: 'Characters',
-    data() {
-        return{
-            characters: []
-        }
-    },
     mounted() {
-        this.getCharacters();
+        this.$store.dispatch('getCharacters')
+        },
+    computed:{
+        ...mapState({
+            characters: state => state.characters
+        })
     },
     methods:{
-    getCharacters: function() {
-        
-      axios.get(`${url}/characters?ts=1&apikey=${public_key}&hash=${hash}`)
-      .then((response) => {
-          response.data.data.results.forEach((item) => {
-          console.log(item)
-          this.characters.push(item)
-          console.log(this.characters)
-
-          })
-      })
-      .catch((error) => {
-          console.log(error)
-      })
-    }
   }
 }
 </script>

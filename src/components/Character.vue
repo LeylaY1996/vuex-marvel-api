@@ -7,6 +7,7 @@
                 {{ char.description }}
             </li>
         </ul>
+        <img :src="url">
     </div>
 </template>
 <script>
@@ -18,7 +19,7 @@ export default {
         return{ 
            character: [],
            url:'',
-           size:''
+           size:'portrait_xlarge.jpg'
 
         }
     },
@@ -35,7 +36,10 @@ export default {
                     console.log("burada",result.data.data)
                     result.data.data.results.forEach((item) => {
                         this.character.push(item);
-                        this.url = item.thumbnail.path
+                        this.url = `${item.thumbnail.path}/${this.size}`
+                        this.url2 = `http://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73/portrait_xlarge.jpg`
+                        console.log(this.url2)
+
                         console.log(this.url)
                     })
                 })

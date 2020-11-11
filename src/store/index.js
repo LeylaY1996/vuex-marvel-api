@@ -6,7 +6,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        characters: []
+        characters: [],
+        character: [],
+        url: ''
     },
     mutations: {
         getCharacters(state) {
@@ -22,11 +24,28 @@ export default new Vuex.Store({
                 .catch((error) => {
                     console.log(error)
                 })
+        },
+        getCharacter(state, id) {
+            axios.get(`${url}/characters/${id}?ts=1&apikey=${public_key}&hash=${hash}`)
+                .then((result) => {
+                    console.log("burada", result.data.data)
+                    result.data.data.results.forEach((item) => {
+                        state.character.push(item);
+                        state.url = `${item.thumbnail.path}/`
+
+                    })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
     },
     actions: {
         getCharacters: context => {
             context.commit('getCharacters')
+        },
+        getCharacter(context, id) {
+            context.commit('getCharacter', id)
         }
     },
     modules: {}

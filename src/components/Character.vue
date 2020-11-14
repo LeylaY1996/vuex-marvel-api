@@ -19,18 +19,26 @@ export default {
     name:'Character',
     data(){
         return{ 
+           url:'',
            size:'portrait_xlarge.jpg'
 
         }
     },
+    mounted(){
+        this.$store.dispatch('getCharacter',this.$route.params.id);
+        this.getImage()
+        console.log()
+    },
     computed: {
         ...mapState({
-            character: state =>state.character
+            character: state =>state.character,
+            preUrl: state => state.url
         })
     },
-    mounted() {
-    },
-    methods: {
+    methods: {  
+        getImage: function(){
+            this.url = `${this.preUrl}${this.size}`
+        }
     }
 }
 

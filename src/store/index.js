@@ -12,12 +12,12 @@ export default new Vuex.Store({
     },
     mutations: {
         getCharacters(state) {
+            state.character = []
+
             axios.get(`${url}/characters?ts=1&apikey=${public_key}&hash=${hash}`)
                 .then((response) => {
                     response.data.data.results.forEach((item) => {
-                        console.log(item)
                         state.characters.push(item)
-                        console.log(this.characters)
 
                     })
                 })
@@ -26,6 +26,8 @@ export default new Vuex.Store({
                 })
         },
         getCharacter(state, id) {
+            state.character = []
+            console.log("leylaaaaaaaaaaaaaaaa", id)
             axios.get(`${url}/characters/${id}?ts=1&apikey=${public_key}&hash=${hash}`)
                 .then((result) => {
                     console.log("burada", result.data.data)
